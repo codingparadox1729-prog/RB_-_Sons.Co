@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RB &amp; Son's Co. — Building Dreams, Developing Excellence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --navy: #1B2D5B;
+      --navy-dark: #101E3E;
+      --gold: #B8965A;
+      --gold-lt: #D4AF72;
+      --stone: #7A7670;
+      --warm: #FAFAF8;
+      --off: #F3F2EF;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--warm);
+      color: var(--navy);
+      overflow-x: hidden;
+      margin: 0;
+    }
+
+    /* ── Reveal ── */
+    .rv {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .85s cubic-bezier(.16, 1, .3, 1), transform .85s cubic-bezier(.16, 1, .3, 1);
+    }
+
+    .rv.on {
+      opacity: 1;
+      transform: none;
+    }
+
+    .d1 {
+      transition-delay: .1s;
+    }
+
+    .d2 {
+      transition-delay: .2s;
+    }
+
+    .d3 {
+      transition-delay: .3s;
+    }
+
+    /* ── Typography ── */
+    .serif {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* ── Section label ── */
+    .lbl {
+      font-size: .68rem;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ── Gold rule ── */
+    .gr {
+      display: inline-block;
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      vertical-align: middle;
+      margin-right: 12px;
+    }
+
+    /* ── Navbar ── */
+    #nav {
+      position: fixed;
+      inset-inline: 0;
+      top: 0;
+      z-index: 999;
+      transition: background .4s, box-shadow .4s;
+    }
+
+    #nav.sc {
+      background: rgba(16, 30, 62, .97);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 1px 0 rgba(184, 150, 90, .18);
+    }
+
+    .nl {
+      font-size: .7rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .7);
+      transition: color .2s;
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .nl::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width .25s;
+    }
+
+    .nl:hover {
+      color: #fff;
+    }
+
+    .nl:hover::after {
+      width: 100%;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(155deg, #0c1830 0%, #1B2D5B 55%, #132040 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 7rem 1.5rem 8rem;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse 55% 45% at 85% 25%, rgba(184, 150, 90, .07) 0%, transparent 65%),
+        repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(255, 255, 255, .018) 79px, rgba(255, 255, 255, .018) 80px),
+        repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(255, 255, 255, .018) 79px, rgba(255, 255, 255, .018) 80px);
+    }
+
+    .hero-cut {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: var(--warm);
+      clip-path: polygon(0 100%, 100% 100%, 100% 35%, 0 100%);
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .17em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      border: none;
+    }
+
+    .btn-g {
+      background: var(--gold);
+      color: #fff;
+      padding: .95rem 2.4rem;
+      transition: background .25s, transform .2s;
+    }
+
+    .btn-g:hover {
+      background: var(--gold-lt);
+      transform: translateY(-1px);
+    }
+
+    .btn-o {
+      border: 1px solid rgba(255, 255, 255, .35);
+      color: #fff;
+      padding: .95rem 2.4rem;
+      transition: border-color .25s, color .25s;
+    }
+
+    .btn-o:hover {
+      border-color: var(--gold);
+      color: var(--gold-lt);
+    }
+
+    /* ── Services ── */
+    .sc-card {
+      background: #fff;
+      border: 1px solid rgba(27, 45, 91, .09);
+      transition: box-shadow .3s, border-color .3s;
+    }
+
+    .sc-card:hover {
+      box-shadow: 0 18px 52px rgba(27, 45, 91, .09);
+      border-color: rgba(184, 150, 90, .28);
+    }
+
+    .sc-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.8rem;
+      font-weight: 300;
+      color: rgba(184, 150, 90, .18);
+      line-height: 1;
+      transition: color .3s;
+    }
+
+    .sc-card:hover .sc-num {
+      color: rgba(184, 150, 90, .45);
+    }
+
+    .sc-dark {
+      background: var(--navy);
+      border-color: transparent;
+    }
+
+    /* ── Thin line ── */
+    .tl {
+      height: 1px;
+      background: rgba(27, 45, 91, .08);
+    }
+
+    .tl-w {
+      height: 1px;
+      background: rgba(255, 255, 255, .1);
+    }
+
+    /* ── Leader card ── */
+    .lc {
+      background: #fff;
+      border: 1px solid rgba(27, 45, 91, .09);
+      overflow: hidden;
+      transition: box-shadow .3s;
+    }
+
+    .lc:hover {
+      box-shadow: 0 20px 56px rgba(27, 45, 91, .1);
+    }
+
+    /* ── Form field ── */
+    .fi {
+      width: 100%;
+      padding: .7rem 0;
+      border: none;
+      border-bottom: 1px solid rgba(27, 45, 91, .15);
+      background: transparent;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .88rem;
+      color: var(--navy);
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .fi:focus {
+      border-color: var(--gold);
+    }
+
+    .fi::placeholder {
+      color: #bbb;
+    }
+
+    /* ── Social float ── */
+    .sfloat {
+      position: fixed;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 800;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .sb {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, .22);
+      transition: transform .2s, box-shadow .2s;
+      text-decoration: none;
+    }
+
+    .sb:hover {
+      transform: scale(1.13);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, .3);
+    }
+
+    .sb-wa {
+      background: #25D366;
+    }
+
+    .sb-ig {
+      background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    }
+
+    /* ── Mobile menu ── */
+    #mm {
+      display: none;
+    }
+
+    #mm.op {
+      display: block;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--navy-dark, #101E3E);
+    }
+
+    .responsive-grid {
+      grid-template-columns: 1fr;
+      /* Default to 1 column for mobile */
+    }
+
+    @media (min-width: 1024px) {
+      .responsive-grid {
+        grid-template-columns: 1fr 1fr;
+        /* 2 columns for laptops/desktops */
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══ NAVBAR ══ -->
+  <nav id="nav">
+    <div style="max-width:1280px;margin:0 auto;padding:0 2rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;height:72px;">
+
+        <!-- Logo: keep LOGO_RB.jpeg in same folder as index.html -->
+        <a href="#" style="display:flex;align-items:center;">
+          <img src="LOGO_RB.jpeg" alt="RB & Son's Co."
+            style="height:50px;width:auto;object-fit:contain;display:block;" />
+        </a>
+
+        <!-- Desktop -->
+        <div class="hidden-mob" style="display:flex;align-items:center;gap:2.5rem;">
+          <a href="#services" class="nl">Services</a>
+          <a href="#about" class="nl">About</a>
+          <a href="#leadership" class="nl">Team</a>
+          <a href="#contact" class="btn btn-g" style="padding:.7rem 1.8rem;font-size:.68rem;">Contact Us</a>
+        </div>
+
+        <!-- Hamburger -->
+        <button onclick="tmob()"
+          style="display:none;background:none;border:none;cursor:pointer;color:white;padding:6px;" id="hbg">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mm" style="background:rgba(16,30,62,.98);padding:0 2rem 1.5rem;">
+      <a href="#services" onclick="tmob()" class="nl"
+        style="display:block;padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.06);">Services</a>
+      <a href="#about" onclick="tmob()" class="nl"
+        style="display:block;padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.06);">About</a>
+      <a href="#leadership" onclick="tmob()" class="nl"
+        style="display:block;padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.06);">Team</a>
+      <a href="#contact" onclick="tmob()" class="btn btn-g"
+        style="display:block;text-align:center;margin-top:1rem;">Contact Us</a>
+    </div>
+  </nav>
+
+
+  <!-- ══ HERO ══ -->
+  <section class="hero">
+    <div style="max-width:1280px;margin:0 auto;width:100%;position:relative;z-index:1;">
+      <div style="max-width:680px;">
+        <div class="rv" style="display:flex;align-items:center;margin-bottom:2rem;">
+          <span class="gr"></span><span class="lbl">Uttarakhand's Trusted Construction Partner</span>
+        </div>
+        <h1 class="serif rv d1"
+          style="font-size:clamp(3rem,8vw,5.5rem);font-weight:300;color:#fff;line-height:1.06;margin:0 0 1.5rem;">
+          Building <em style="font-style:italic;color:var(--gold-lt);">Dreams,</em><br />
+          Developing<br /><em style="font-style:italic;color:var(--gold-lt);">Excellence.</em>
+        </h1>
+        <p class="rv d2"
+          style="color:rgba(255,255,255,.55);font-size:1rem;font-weight:300;line-height:1.75;max-width:500px;margin:0 0 2.5rem;">
+          From raw land to finished homes — we deliver quality construction, transparent processes,
+          and lasting trust across Uttarakhand and beyond.
+        </p>
+        <div class="rv d3" style="display:flex;flex-wrap:wrap;gap:1rem;">
+          <a href="#services" class="btn btn-g">Our Services</a>
+          <a href="#contact" class="btn btn-o">Get a Free Quote</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-cut"></div>
+  </section>
+
+
+  <!-- ══ SERVICES ══ -->
+  <section id="services" style="background:var(--warm);padding:6rem 2rem;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div style="max-width:520px;margin-bottom:4rem;" class="rv">
+        <div style="display:flex;align-items:center;margin-bottom:1rem;"><span class="gr"></span><span class="lbl">What
+            We Offer</span></div>
+        <h2 class="serif" style="font-size:clamp(2.2rem,5vw,3.8rem);font-weight:400;color:var(--navy);margin:0;">Our
+          Services</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;">
+
+        <!-- 01 -->
+        <div class="sc-card rv" style="padding:2.5rem;">
+          <div class="sc-num">01</div>
+          <div class="tl" style="margin:1.2rem 0;"></div>
+          <h3 class="serif" style="font-size:1.7rem;font-weight:500;color:var(--navy);margin:0 0 .9rem;">Land
+            Development</h3>
+          <p style="font-size:.85rem;line-height:1.8;color:var(--stone);margin:0 0 1.4rem;">Expert master planning,
+            infrastructure layout, and zoning consultation to transform raw land into valuable, development-ready plots.
+          </p>
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.6rem;">
+            <li style="display:flex;align-items:center;gap:.75rem;font-size:.82rem;color:var(--stone);"><span
+                style="width:18px;height:1px;background:var(--gold);flex-shrink:0;display:inline-block;"></span>Master
+              Planning</li>
+            <li style="display:flex;align-items:center;gap:.75rem;font-size:.82rem;color:var(--stone);"><span
+                style="width:18px;height:1px;background:var(--gold);flex-shrink:0;display:inline-block;"></span>Infrastructure
+              Layout</li>
+            <li style="display:flex;align-items:center;gap:.75rem;font-size:.82rem;color:var(--stone);"><span
+                style="width:18px;height:1px;background:var(--gold);flex-shrink:0;display:inline-block;"></span>Zoning
+              &amp; Legal Clearance</li>
+          </ul>
+        </div>
+
+        <!-- 02 navy -->
+        <div class="sc-card sc-dark rv d1" style="padding:2.5rem;">
+          <div class="sc-num" style="color:rgba(212,175,114,.18);">02</div>
+          <div class="tl-w" style="margin:1.2rem 0;"></div>
+          <h3 class="serif" style="font-size:1.7rem;font-weight:500;color:#fff;margin:0 0 .9rem;">Property Buy &amp;
+            Sell</h3>
+          <p style="font-size:.85rem;line-height:1.8;color:rgba(255,255,255,.48);margin:0 0 1.4rem;">End-to-end
+            assistance for residential and commercial property transactions with full documentation support and
+            transparent pricing.</p>
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.6rem;">
+            <li style="display:flex;align-items:center;gap:.75rem;font-size:.82rem;color:rgba(255,255,255,.48);"><span
+                style="width:18px;height:1px;background:var(--gold);flex-shrink:0;display:inline-block;"></span>Residential
+              &amp; Commercial Sales</li>
+            <li style="display:flex;align-items:center;gap:.75rem;font-size:.82rem;color:rgba(255,255,255,.48);"><span
+                style="width:18px;height:1px;background:var(--gold);flex-shrink:0;display:inline-block;"></span>Property
+              Documentation</li>
+            <li style="display:flex;align-items:center;gap:.75rem;font-size:.82rem;color:rgba(255,255,255,.48);"><span
+                style="width:18px;height:1px;background:var(--gold);flex-shrink:0;display:inline-block;"></span>Legal
+              &amp; Registration Help</li>
+          </ul>
+        </div>
+
+        <!-- 03 -->
+        <div class="sc-card rv d2" style="padding:2.5rem;">
+          <div class="sc-num">03</div>
+          <div class="tl" style="margin:1.2rem 0;"></div>
+          <h3 class="serif" style="font-size:1.7rem;font-weight:500;color:var(--navy);margin:0 0 .9rem;">Home &amp;
+            Building Construction</h3>
+          <p style="font-size:.85rem;line-height:1.8;color:var(--stone);margin:0 0 1.4rem;">Turnkey construction
+            solutions for homes and commercial buildings — custom designed, quality built, and delivered on time.</p>
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.6rem;">
+            <li style="display:flex;align-items:center;gap:.75rem;font-size:.82rem;color:var(--stone);"><span
+                style="width:18px;height:1px;background:var(--gold);flex-shrink:0;display:inline-block;"></span>Custom
+              Home Building</li>
+            <li style="display:flex;align-items:center;gap:.75rem;font-size:.82rem;color:var(--stone);"><span
+                style="width:18px;height:1px;background:var(--gold);flex-shrink:0;display:inline-block;"></span>Commercial
+              Construction</li>
+            <li style="display:flex;align-items:center;gap:.75rem;font-size:.82rem;color:var(--stone);"><span
+                style="width:18px;height:1px;background:var(--gold);flex-shrink:0;display:inline-block;"></span>Turnkey
+              Project Delivery</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══ ABOUT ══ -->
+  <section id="about" class="section-container" style="background:#fff;padding:6rem 2rem;">
+    <div class="responsive-grid" style="max-width:1280px;margin:0 auto;display:grid;gap:2rem;align-items:center;">
+
+      <!-- Visual -->
+      <div class="rv" style="order:2;">
+        <div style="position:relative;">
+          <div style="background:var(--navy);padding:3.5rem 3rem;position:relative;overflow:hidden;">
+            <div
+              style="position:absolute;inset:0;opacity:.035;background-image:repeating-linear-gradient(0,transparent,transparent 39px,#fff 39px,#fff 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,#fff 39px,#fff 40px);">
+            </div>
+            <div style="position:relative;z-index:1;">
+              <div class="serif" style="font-size:8rem;font-weight:300;line-height:1;color:rgba(255,255,255,.07);">RB
+              </div>
+              <div style="height:1px;background:rgba(184,150,90,.3);margin:1.75rem 0;"></div>
+              <p class="serif"
+                style="font-size:1.25rem;font-weight:300;font-style:italic;color:rgba(255,255,255,.75);line-height:1.65;margin:0;">
+                "Quality is never an accident.<br />It is always the result of<br />intelligent effort."
+              </p>
+            </div>
+          </div>
+          <div
+            style="position:absolute;bottom:-18px;right:-18px;width:110px;height:110px;background:var(--gold);z-index:-1;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div class="rv d1" style="order:1;">
+        <div style="display:flex;align-items:center;margin-bottom:1.25rem;"><span class="gr"></span><span
+            class="lbl">Who We Are</span></div>
+        <h2 class="serif"
+          style="font-size:clamp(2.2rem,5vw,3.6rem);font-weight:400;color:var(--navy);margin:0 0 1.5rem;line-height:1.1;">
+          Our Vision &amp;<br />Mission</h2>
+        <p style="font-size:.88rem;line-height:1.85;color:var(--stone);margin:0 0 1rem;">
+          At <strong style="color:var(--navy);font-weight:500;">RB &amp; Son's Co.</strong>, we believe every
+          construction project is more than bricks and mortar — it's a dream taking shape. Founded on the values of
+          quality, honesty, and transparency, we guide our clients from the first handshake to the final key handover.
+        </p>
+        <p style="font-size:.88rem;line-height:1.85;color:var(--stone);margin:0 0 2rem;">
+          Our mission is simple: deliver excellence without compromise. We use top-grade materials, certified
+          professionals, and an open-book process so you always know exactly where your project stands. No hidden costs.
+          No unpleasant surprises. Just results you will be proud of for generations.
+        </p>
+
+        <div class="rv d2"
+          style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2.5rem; background: var(--off); padding: 1.5rem; border-left: 3px solid var(--gold);">
+          <div class="serif" style="font-size: 3rem; color: var(--navy); line-height: 1; font-weight: 300;">20+</div>
+          <div>
+            <div class="lbl" style="margin-bottom: 2px;">Years of Excellence</div>
+            <div style="font-size: 0.85rem; color: var(--stone);">Building trust across Uttarakhand since 2006.</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+          <div style="border-top:1px solid rgba(184,150,90,.4);padding-top:1.1rem;">
+            <div class="serif" style="font-size:1.1rem;font-weight:500;color:var(--navy);margin-bottom:.4rem;">Quality
+              First</div>
+            <div style="font-size:.8rem;color:var(--stone);line-height:1.6;">Premium materials &amp; certified craftsmen
+              on every project.</div>
+          </div>
+          <div style="border-top:1px solid rgba(184,150,90,.4);padding-top:1.1rem;">
+            <div class="serif" style="font-size:1.1rem;font-weight:500;color:var(--navy);margin-bottom:.4rem;">Full
+              Transparency</div>
+            <div style="font-size:.8rem;color:var(--stone);line-height:1.6;">Open-book budgeting with no hidden charges,
+              ever.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══ LEADERSHIP ══ -->
+  <section id="leadership" style="background:var(--off);padding:6rem 2rem;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:4rem;" class="rv">
+        <div style="display:inline-flex;align-items:center;gap:0;margin-bottom:1rem;">
+          <span class="gr"></span><span class="lbl">The People Behind It</span><span class="gr"
+            style="margin-left:12px;margin-right:0;"></span>
+        </div>
+        <h2 class="serif" style="font-size:clamp(2.2rem,5vw,3.8rem);font-weight:400;color:var(--navy);margin:0;">Meet
+          Our Leadership</h2>
+      </div>
+      <div
+        style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;max-width:740px;margin:0 auto;">
+
+        <!-- Roshan -->
+        <div class="lc rv">
+          <div
+            style="background:var(--navy);height:180px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <div
+              style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent,transparent 10px,rgba(255,255,255,.02) 10px,rgba(255,255,255,.02) 11px);">
+            </div>
+            <div
+              style="width:76px;height:76px;border:1px solid rgba(184,150,90,.45);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;">
+              <span class="serif" style="color:#fff;font-size:1.6rem;font-weight:300;">RB</span>
+            </div>
+          </div>
+          <div style="padding:1.75rem;">
+            <div
+              style="display:inline-block;border:1px solid var(--gold);color:var(--gold);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;padding:.28rem .75rem;margin-bottom:.9rem;">
+              Founder</div>
+            <h3 class="serif" style="font-size:1.5rem;font-weight:500;color:var(--navy);margin:0 0 .75rem;">Roshan
+              Bailwal</h3>
+            <p style="font-size:.82rem;line-height:1.75;color:var(--stone);margin:0;">Visionary leader with extensive
+              experience in construction, land development, and real estate. Roshan's passion for quality and
+              community-first approach drives everything we build.</p>
+            <div class="tl" style="margin:1.1rem 0;"></div>
+            <div style="display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--stone);">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.37 2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+              +91 78959 56913
+            </div>
+          </div>
+        </div>
+
+        <!-- Ritik -->
+        <div class="lc rv d1">
+          <div
+            style="background:var(--navy);height:180px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <div
+              style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent,transparent 10px,rgba(255,255,255,.02) 10px,rgba(255,255,255,.02) 11px);">
+            </div>
+            <div
+              style="width:76px;height:76px;border:1px solid rgba(184,150,90,.45);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;">
+              <span class="serif" style="color:#fff;font-size:1.6rem;font-weight:300;">RB</span>
+            </div>
+          </div>
+          <div style="padding:1.75rem;">
+            <div
+              style="display:inline-block;border:1px solid rgba(27,45,91,.25);color:var(--navy);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;padding:.28rem .75rem;margin-bottom:.9rem;">
+              Project Manager</div>
+            <h3 class="serif" style="font-size:1.5rem;font-weight:500;color:var(--navy);margin:0 0 .75rem;">Ritik
+              Bailwal</h3>
+            <p style="font-size:.82rem;line-height:1.75;color:var(--stone);margin:0;">Detail-oriented project manager
+              who keeps every build on schedule, on budget, and above expectations. Ritik is the operational backbone of
+              RB &amp; Son's Co.</p>
+            <div class="tl" style="margin:1.1rem 0;"></div>
+            <div style="display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--stone);">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.37 2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+              +91 78959 56913
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══ CONTACT ══ -->
+  <section id="contact" class="section-container" style="background:#fff;padding:6rem 2rem;">
+    <div class="responsive-grid" style="max-width:1280px;margin:0 auto;display:grid;gap:3rem;align-items:start;">
+
+      <!-- Info -->
+      <div class="rv">
+        <div style="display:flex;align-items:center;margin-bottom:1.25rem;"><span class="gr"></span><span
+            class="lbl">Get In Touch</span></div>
+        <h2 class="serif"
+          style="font-size:clamp(2.2rem,5vw,3.6rem);font-weight:400;color:var(--navy);margin:0 0 1.25rem;line-height:1.1;">
+          Start Your<br />Project Today</h2>
+        <p style="font-size:.88rem;line-height:1.8;color:var(--stone);margin:0 0 3rem;">Have a plot? Planning to build?
+          Looking to buy or sell property? Fill in the form and our team will reach out within 24 hours — no obligation.
+        </p>
+
+        <div style="display:flex;flex-direction:column;gap:2rem;">
+
+          <div style="display:flex;gap:1.25rem;align-items:flex-start;">
+            <div
+              style="width:38px;height:38px;border:1px solid rgba(184,150,90,.35);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8">
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.37 2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+            </div>
+            <div>
+              <div class="lbl" style="margin-bottom:.3rem;">Phone / WhatsApp</div>
+              <div style="font-size:.88rem;color:var(--navy);">+91 78959 56913</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:1.25rem;align-items:flex-start;">
+            <div
+              style="width:38px;height:38px;border:1px solid rgba(184,150,90,.35);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+            </div>
+            <div>
+              <div class="lbl" style="margin-bottom:.3rem;">Email</div>
+              <div style="font-size:.88rem;color:var(--navy);">bailwalandsons@gmail.com</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:1.25rem;align-items:flex-start;">
+            <div
+              style="width:38px;height:38px;border:1px solid rgba(184,150,90,.35);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8">
+                <path d="M20 10c0 6-8 13-8 13s-8-7-8-13a8 8 0 0 1 16 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+            </div>
+            <div>
+              <div class="lbl" style="margin-bottom:.3rem;">Office — Rishikesh</div>
+              <div style="font-size:.88rem;color:var(--navy);line-height:1.6;">Gumaniwala, Rishikesh<br />Dehradun,
+                Uttarakhand — 249204</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:1.25rem;align-items:flex-start;">
+            <div
+              style="width:38px;height:38px;border:1px solid rgba(184,150,90,.35);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8">
+                <path d="M20 10c0 6-8 13-8 13s-8-7-8-13a8 8 0 0 1 16 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+            </div>
+            <div>
+              <div class="lbl" style="margin-bottom:.3rem;">Office — Tehri</div>
+              <div style="font-size:.88rem;color:var(--navy);line-height:1.6;">New Tehri, Tehri Garhwal<br />Uttarakhand
+                — 249001</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="rv d1">
+        <div style="border:1px solid rgba(27,45,91,.09);padding:2.75rem;background:var(--off);">
+          <h3 class="serif" style="font-size:1.6rem;font-weight:500;color:var(--navy);margin:0 0 2rem;">Send Us a
+            Message</h3>
+          <form id="cf" onsubmit="hs(event)" style="display:flex;flex-direction:column;gap:1.4rem;">
+            <div>
+              <label
+                style="display:block;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--stone);margin-bottom:.5rem;">Full
+                Name *</label>
+              <input type="text" id="fn" placeholder="Ramesh Kumar" required class="fi" />
+            </div>
+            <div>
+              <label
+                style="display:block;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--stone);margin-bottom:.5rem;">Email
+                Address *</label>
+              <input type="email" id="fe" placeholder="you@example.com" required class="fi" />
+            </div>
+            <div>
+              <label
+                style="display:block;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--stone);margin-bottom:.5rem;">Phone
+                Number</label>
+              <input type="tel" id="fp" placeholder="+91 98765 43210" class="fi" />
+            </div>
+            <div>
+              <label
+                style="display:block;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--stone);margin-bottom:.5rem;">Project
+                Type *</label>
+              <select id="ft" required class="fi">
+                <option value="" disabled selected>— Select a Service —</option>
+                <option>Land Development</option>
+                <option>Property Buy / Sell</option>
+                <option>Home Construction</option>
+                <option>Commercial Building</option>
+                <option>Other / Not Sure</option>
+              </select>
+            </div>
+            <div>
+              <label
+                style="display:block;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--stone);margin-bottom:.5rem;">Message</label>
+              <textarea id="fm" rows="4" placeholder="Tell us briefly about your project…" class="fi"
+                style="resize:none;border-bottom:1px solid rgba(27,45,91,.15);"></textarea>
+            </div>
+            <button type="submit" class="btn btn-g" style="width:100%;text-align:center;margin-top:.5rem;">Send via
+              WhatsApp →</button>
+            <div id="fs" style="display:none;text-align:center;font-size:.75rem;color:var(--gold);letter-spacing:.1em;">
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══ FOOTER ══ -->
+  <footer style="background:#101E3E;padding:4rem 2rem 2rem;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div
+        style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.07);">
+
+        <!-- Brand -->
+        <div>
+          <img src="LOGO_RB.jpeg" alt="RB & Son's Co."
+            style="height:52px;width:auto;object-fit:contain;display:block;margin-bottom:1.25rem;" />
+          <p style="font-size:.82rem;line-height:1.75;color:rgba(255,255,255,.38);max-width:300px;margin:0 0 1.5rem;">
+            Building dreams and developing excellence across Uttarakhand. Quality, transparency, and trust — since day
+            one.</p>
+          <div style="display:flex;gap:.7rem;">
+            <a href="https://wa.me/7895956913" target="_blank" class="sb sb-wa">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="white">
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+              </svg>
+            </a>
+            <a href="https://www.instagram.com/rbsons_co?igsh=MTVsZjZtaHZ6N3FyMA==" target="_blank" class="sb sb-ig">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="white">
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Nav -->
+        <div>
+          <div class="lbl" style="margin-bottom:1.25rem;">Navigation</div>
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.75rem;">
+            <li><a href="#services"
+                style="font-size:.82rem;color:rgba(255,255,255,.42);text-decoration:none;transition:color .2s;"
+                onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.42)'">Services</a>
+            </li>
+            <li><a href="#about"
+                style="font-size:.82rem;color:rgba(255,255,255,.42);text-decoration:none;transition:color .2s;"
+                onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.42)'">About Us</a>
+            </li>
+            <li><a href="#leadership"
+                style="font-size:.82rem;color:rgba(255,255,255,.42);text-decoration:none;transition:color .2s;"
+                onmouseover="this.style.color='#fff'"
+                onmouseout="this.style.color='rgba(255,255,255,.42)'">Leadership</a></li>
+            <li><a href="#contact"
+                style="font-size:.82rem;color:rgba(255,255,255,.42);text-decoration:none;transition:color .2s;"
+                onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.42)'">Contact</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <div class="lbl" style="margin-bottom:1.25rem;">Contact</div>
+          <ul
+            style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.75rem;font-size:.82rem;color:rgba(255,255,255,.42);">
+            <li>+91 78959 56913</li>
+            <li>bailwalandsons@gmail.com</li>
+            <li style="line-height:1.6;">Gumaniwala, Rishikesh<br />Dehradun — 249204</li>
+            <li style="line-height:1.6;">New Tehri, Tehri Garhwal<br />— 249001</li>
+          </ul>
+        </div>
+      </div>
+      <div
+        style="padding-top:1.75rem;display:flex;justify-content:space-between;align-items:center;font-size:.68rem;letter-spacing:.12em;color:rgba(255,255,255,.18);flex-wrap:wrap;gap:.5rem;">
+        <span>© 2025 RB &amp; SON'S CO. — ALL RIGHTS RESERVED</span>
+        <span>BAILWAL'S</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating social -->
+  <div class="sfloat">
+    <a href="https://wa.me/7895956913" target="_blank" class="sb sb-wa" title="WhatsApp">
+      <svg viewBox="0 0 24 24" width="19" height="19" fill="white">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+      </svg>
+    </a>
+    <a href="https://www.instagram.com/rbsons_co?igsh=MTVsZjZtaHZ6N3FyMA==" target="_blank" class="sb sb-ig"
+      title="Instagram">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="white">
+        <path
+          d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+      </svg>
+    </a>
+  </div>
+
+  <!-- Responsive CSS for mobile -->
+  <style>
+    @media (max-width: 767px) {
+      .hidden-mob {
+        display: none !important;
+      }
+
+      #hbg {
+        display: block !important;
+      }
+
+      /* Ensure padding isn't too wide on mobile */
+      section {
+        padding: 4rem 1.25rem !important;
+      }
+
+      /* Fix Hero font size for mobile */
+      h1 {
+        font-size: 2.8rem !important;
+      }
+
+      /* Stack the About and Contact sections */
+      #about>div,
+      #contact>div {
+        grid-template-columns: 1fr !important;
+        gap: 3rem !important;
+      }
+
+      /* Re-order About section so text comes first on mobile */
+      #about>div>div:first-child {
+        order: 2 !important;
+      }
+
+      #about>div>div:last-child {
+        order: 1 !important;
+      }
+
+      footer>div>div:first-child {
+        grid-template-columns: 1fr !important;
+        text-align: center;
+      }
+
+      footer img {
+        margin: 0 auto 1.25rem !important;
+      }
+    }
+
+    /* Tablet Adjustments */
+    @media (min-width: 768px) and (max-width: 1023px) {
+
+      #about>div,
+      #contact>div {
+        grid-template-columns: 1fr !important;
+      }
+
+      h1 {
+        font-size: 4rem !important;
+      }
+    }
+  </style>
+
+  <script>
+    /* Navbar */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => { nav.classList.toggle('sc', scrollY > 50); });
+
+    /* Mobile menu */
+    function tmob() { document.getElementById('mm').classList.toggle('op'); }
+
+    /* Scroll reveal */
+    const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); }), { threshold: 0.12 });
+    document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+    /* Form submit → WhatsApp */
+    function hs(e) {
+      e.preventDefault();
+      const n = document.getElementById('fn').value.trim(),
+        em = document.getElementById('fe').value.trim(),
+        ph = document.getElementById('fp').value.trim(),
+        ty = document.getElementById('ft').value,
+        ms = document.getElementById('fm').value.trim();
+      const txt = `Hello RB & Son's Co.!\n\nNew website inquiry:\n\n*Name:* ${n}\n*Email:* ${em}\n*Phone:* ${ph || 'N/A'}\n*Project Type:* ${ty}\n*Message:* ${ms || 'N/A'}`;
+      window.open(`https://wa.me/7895956913?text=${encodeURIComponent(txt)}`, '_blank');
+      const s = document.getElementById('fs');
+      s.style.display = 'block';
+      s.textContent = '✓ Opening WhatsApp with your message…';
+      document.getElementById('cf').reset();
+    }
+  </script>
+</body>
+
+</html>
